@@ -1,0 +1,33 @@
+{
+  "name": "vigil-probe-engine",
+  "version": "1.0.0",
+  "description": "High-concurrency distributed health and uptime probe engine with multi-protocol checks and real-time alerting",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest --detectOpenHandles",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "uptime-monitor",
+    "health-checks",
+    "monitoring",
+    "distributed-systems",
+    "sre",
+    "observability"
+  ],
+  "author": "Akshay Nisang <axaynisang@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.5",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.1.6"
+  }
+}
