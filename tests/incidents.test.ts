@@ -50,10 +50,6 @@ describe('IncidentStateManager', () => {
   });
 
   test('resolves active incident when probe succeeds', () => {
-    monitor.currentStatus = 'DOWN';
-    monitor.consecutiveFailures = 3;
-
-    // Simulate pre-existing incident
     const failureResult: ProbeResult = {
       monitorId: monitor.id,
       isUp: false,
@@ -61,7 +57,14 @@ describe('IncidentStateManager', () => {
       errorMessage: 'Conn refused',
       checkedAt: new Date().toISOString()
     };
+
+    // Trip the incident by 3 failures
     manager.processProbeResult(monitor, failureResult);
+    manager.processProbeResult(monitor, failureResult);
+    manager.processProbeResult(monitor, failureResult);
+
+    expect(monitor.currentStatus).toBe('DOWN');
+    expect(manager.getActiveIncidents().length).toBe(1);
 
     // Now success arrives
     const successResult: ProbeResult = {
