@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { Monitor, StatusPageSummary } from '../types';
-import { IncidentStateManager } from '../incidents/IncidentStateManager';
+import { Monitor, StatusPageSummary } from './types';
+import { IncidentStateManager } from './incidents/IncidentStateManager';
 
 export function createStatusApp(
   monitors: Map<string, Monitor>,
@@ -42,12 +42,9 @@ export function createStatusApp(
 
   // Prometheus Metrics endpoint
   app.get('/metrics', (req: Request, res: Response) => {
-    let output = '# HELP probe_up Monitor operational state (1=UP, 0=DOWN)
-# TYPE probe_up gauge
-';
+    let output = '# HELP probe_up Monitor operational state (1=UP, 0=DOWN)\n# TYPE probe_up gauge\n';
     monitors.forEach((m) => {
-      output += `probe_up{monitor_id="${m.id}",type="${m.type}"} ${m.currentStatus === 'UP' ? 1 : 0}
-`;
+      output += `probe_up{monitor_id="${m.id}",type="${m.type}"} ${m.currentStatus === 'UP' ? 1 : 0}\n`;
     });
     res.set('Content-Type', 'text/plain');
     res.send(output);
